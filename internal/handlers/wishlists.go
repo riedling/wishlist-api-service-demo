@@ -92,7 +92,7 @@ func (h *WishlistsHandler) ListPublicForUser(c *gin.Context) {
 	httputil.OKWithMeta(c, matches[start:end], page.ToMeta(len(matches)))
 }
 
-// Create handles POST /wishlists, allowing a user to create a new wishlist.
+// Create handles POST /wishlist, allowing a user to create a new wishlist.
 func (h *WishlistsHandler) Create(c *gin.Context) {
 	var req createWishlistRequest
 	if !httputil.BindJSON(c, &req) {
@@ -108,13 +108,13 @@ func (h *WishlistsHandler) Create(c *gin.Context) {
 	}
 
 	h.mu.Lock()
-	h.wishlists[wl.ID] = wl
+	h.wishlists[wl.ID] = wl // TODO: determine 
 	h.mu.Unlock()
 
 	httputil.Created(c, wl)
 }
 
-// Delete handles DELETE /wishlists/:id, removing the wishlist with the given
+// Delete handles DELETE /wishlist/:id, removing the wishlist with the given
 // ID.
 func (h *WishlistsHandler) Delete(c *gin.Context) {
 	var uri wishlistURI

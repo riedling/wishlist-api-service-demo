@@ -50,12 +50,12 @@ func registerItemRoutes(rg *gin.RouterGroup) {
 	items.DELETE("/:id", h.Delete)
 }
 
-// registerWishlistRoutes mounts the /wishlists resource.
+// registerWishlistRoutes mounts the /wishlist resource.
 func registerWishlistRoutes(rg *gin.RouterGroup) {
 	h := handlers.NewWishlistsHandler()
 
-	wishlists := rg.Group("/wishlists")
-	wishlists.GET("/public", h.ListPublicForUser)
-	wishlists.POST("", h.Create)
-	wishlists.DELETE("/:id", h.Delete)
+	wishlist := rg.Group("/wishlist")
+	// wishlists.GET("/public", h.ListPublicForUser)
+	wishlist.POST("", h.Create)
+	wishlist.DELETE("/:id", h.Delete)
 }
