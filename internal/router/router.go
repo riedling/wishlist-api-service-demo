@@ -55,7 +55,8 @@ func registerWishlistRoutes(rg *gin.RouterGroup) {
 	h := handlers.NewWishlistsHandler()
 
 	wishlist := rg.Group("/wishlist")
-	// wishlists.GET("/public", h.ListPublicForUser)
+	wishlist.GET("/public", h.ListPublicForUser)
 	wishlist.POST("", h.Create)
+	wishlist.PUT("/:id", h.Update)
 	wishlist.DELETE("/:id", h.Delete)
 }

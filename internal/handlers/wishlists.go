@@ -34,6 +34,17 @@ type createWishlistRequest struct {
 	IsPublic bool   `json:"is_public"`
 }
 
+// updateWishlistRequest is the validated payload for updating a wishlist.
+// Every field is optional (pointer) so callers can supply any subset of
+// fields that exist on the wishlist; only fields present in the request
+// body are applied.
+type updateWishlistRequest struct {
+	UserID   *string `json:"user_id" binding:"omitempty,min=1"`
+	Name     *string `json:"name" binding:"omitempty,min=1,max=200"`
+	IsPublic *bool   `json:"is_public"`
+	Items    *[]Item `json:"items"`
+}
+
 // wishlistURI binds the ":id" path parameter shared by single-wishlist
 // routes.
 type wishlistURI struct {
@@ -108,10 +119,50 @@ func (h *WishlistsHandler) Create(c *gin.Context) {
 	}
 
 	h.mu.Lock()
-	h.wishlists[wl.ID] = wl // TODO: determine 
+	h.wishlists[wl.ID] = wl
 	h.mu.Unlock()
 
 	httputil.Created(c, wl)
+}
+
+// Update handles PUT /wishlists/:id, applying any subset of updatable
+// fields supplied in the request body to the existing wishlist.
+func (h *WishlistsHandler) Update(c *gin.Context) {
+	var uri wishlistURI
+	if !httputil.BindURI(c, &uri) {
+		return
+	}
+
+	var req updateWishlistRequest
+	if !httputil.BindJSON(c, &req) {
+		return
+	}
+
+	h.mu.Lock()
+	defer h.mu.Unlock()
+
+	wl, found := h.wishlists[uri.ID]
+	if !found {
+		httputil.NotFound(c, "wishlist not found")
+		return
+	}
+
+	if req.UserID != nil {
+		wl.UserID = *req.UserID
+	}
+	if req.Name != nil {
+		wl.Name = *req.Name
+	}
+	if req.IsPublic != nil {
+		wl.IsPublic = *req.IsPublic
+	}
+	if req.Items != nil {
+		wl.Items = *req.Items
+	}
+
+	h.wishlists[uri.ID] = wl
+
+	httputil.OK(c, wl)
 }
 
 // Delete handles DELETE /wishlist/:id, removing the wishlist with the given
