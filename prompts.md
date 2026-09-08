@@ -21,3 +21,7 @@
 - GET HTTP method for getting all wishlists for a user, whose ID is specified in the URI and the query parameters specify the privacy setting (public/private/unlisted)
 - DELETE HTTP method for all wishlists for a user, whose ID is specified in the URI
 - POST HTTP method for modifying the wishlists a user has
+7. These routes could be named a little better. They should get their own group:
+    wishlist.GET("/user/:user_id", h.GetAllForUser)
+	wishlist.DELETE("/user/:user_id", h.DeleteAllForUser)
+	wishlist.POST("/user/:user_id", h.ModifyForUser)
