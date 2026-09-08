@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package wishlist.v1;
+
+option go_package = "github.com/riedl/wishlist-api-service/protos;protos";
+
+import "item.proto";
+
+// Wishlist represents a named collection of items.
+message Wishlist {
+  // Unique identifier for the wishlist.
+  string id = 1;
+
+  // Items contained in this wishlist.
+  repeated Item items = 2;
+}

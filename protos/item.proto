@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package wishlist.v1;
+
+option go_package = "github.com/riedl/wishlist-api-service/protos;protos";
+
+import "google/protobuf/wrappers.proto";
+
+// Item represents a single entry in a wishlist.
+message Item {
+  // Unique identifier for the item.
+  string id = 1;
+
+  // Optional URL link to the item (e.g. a product page).
+  google.protobuf.StringValue url = 2;
+
+  // Optional thumbnail photo link for the item.
+  google.protobuf.StringValue thumbnail_url = 3;
+
+  // Free-form notes about the item.
+  string notes = 4;
+}
