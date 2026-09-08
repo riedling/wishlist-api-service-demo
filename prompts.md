@@ -17,4 +17,7 @@
 4. Create a POST request for a user to create a new wishlist and a DELETE request that takes the ID of wishlist in the URI to delete it by ID.
 (Manual adjustments - some formatting not entirely what I had in mind.)
 5. Create a PUT request for a user to update a wishlist, where the request body can take in any field value that exists on the wishlist. It should use the same URI structure as DELETE.
-6. 
+6. Create another set of routes as follows:
+- GET HTTP method for getting all wishlists for a user, whose ID is specified in the URI and the query parameters specify the privacy setting (public/private/unlisted)
+- DELETE HTTP method for all wishlists for a user, whose ID is specified in the URI
+- POST HTTP method for modifying the wishlists a user has
