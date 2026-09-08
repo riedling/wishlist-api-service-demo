@@ -31,6 +31,7 @@ func New() *gin.Engine {
 
 	v1 := engine.Group("/api/v1")
 	registerItemRoutes(v1)
+	registerWishlistRoutes(v1)
 
 	return engine
 }
@@ -47,4 +48,14 @@ func registerItemRoutes(rg *gin.RouterGroup) {
 	items.GET("/:id", h.Get)
 	items.PUT("/:id", h.Update)
 	items.DELETE("/:id", h.Delete)
+}
+
+// registerWishlistRoutes mounts the /wishlists resource.
+func registerWishlistRoutes(rg *gin.RouterGroup) {
+	h := handlers.NewWishlistsHandler()
+
+	wishlists := rg.Group("/wishlists")
+	wishlists.GET("/public", h.ListPublicForUser)
+	wishlists.POST("", h.Create)
+	wishlists.DELETE("/:id", h.Delete)
 }

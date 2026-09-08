@@ -11,3 +11,8 @@
 - Wishlist, which has the following fields:
     - A unique identifier
     - An array of Items
+
+(Used GitHub agent)
+3. This API is a Wishlist-sharing service. This means the requests pertain to wishlists that track and maintain items. Create a GET request to fetch the public wishlists for a user, given some ID in the query parameters. Make sure to reuse existing REST API utilities in this application.
+4. Create a POST request for a user to create a new wishlist and a DELETE request that takes the ID of wishlist in the URI to delete it by ID.
+5. 
